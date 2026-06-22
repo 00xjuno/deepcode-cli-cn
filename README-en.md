@@ -16,18 +16,16 @@ English · [中文](./README.md)
 <br/>
 </div>
 
-[Deep Code](https://github.com/lessweb/deepcode-cli) is a terminal AI coding assistant optimized for the `deepseek-v4` model, with support for deep thinking, reasoning effort control, Agent Skills, and MCP (Model Context Protocol) integration.
+[Deep Code](https://github.com/00xjuno/deepcode-cli-cn) is a terminal AI coding assistant optimized for the `deepseek-v4` model, with support for deep thinking, reasoning effort control, Agent Skills, and MCP (Model Context Protocol) integration.
 
 
 ## Installation
 
 ```bash
-npm install -g @vegamo/deepcode-cli
+npm install -g deepcode-cli-cn
 ```
 
-Run `deepcode` inside any project directory to get started.
-
-![intro2](resources/intro2.png)
+Run `deepcode` inside any project directory to get started. On first run, an interactive setup wizard will guide you through configuring your API key — no manual file editing required.
 
 ## Configuration
 
@@ -62,6 +60,14 @@ Skills are discovered from these locations, in priority order:
 | Project | `./.agents/skills/`   | Cross-client interoperability |
 | User    | `~/.deepcode/skills/` | Deep Code's native location   |
 | User    | `~/.agents/skills/`   | Cross-client interoperability |
+
+### **First-Run Setup Wizard**
+- Automatic interactive API key setup on first launch — no manual JSON editing required.
+- Simply paste your DeepSeek API key when prompted and you're ready to go.
+
+### **DeepSeek Balance Display**
+- Real-time DeepSeek account balance shown in the status bar, refreshed every minute.
+- Uses the official `/user/balance` API for accurate data.
 
 ### **Optimized for DeepSeek**
 - Specifically tuned for DeepSeek model performance.
@@ -153,8 +159,8 @@ Contributions are welcome! Here's how to get started:
 
 ```bash
 # Clone the repository
-git clone https://github.com/lessweb/deepcode-cli.git
-cd deepcode-cli
+git clone https://github.com/00xjuno/deepcode-cli-cn.git
+cd deepcode-cli-cn
 
 # Install dependencies
 npm install
@@ -174,7 +180,7 @@ npm link
 
 ## Getting Help
 
-- Report bugs or request features on GitHub Issues (https://github.com/lessweb/deepcode-cli/issues)
+- Report bugs or request features on GitHub Issues (https://github.com/00xjuno/deepcode-cli-cn/issues)
 
 ## License
 
@@ -184,26 +190,26 @@ npm link
 
 If you find this tool helpful, please consider supporting us by:
 
-- Giving us a Star on GitHub (https://github.com/lessweb/deepcode-cli)
+- Giving us a Star on GitHub (https://github.com/00xjuno/deepcode-cli-cn)
 - Submitting feedback and suggestions
 - Sharing with your friends and colleagues
 
 
 <!-- LINK GROUP -->
 
-[npm-release-link]: https://www.npmjs.com/package/@vegamo/deepcode-cli
-[npm-release-shield]: https://img.shields.io/npm/v/@vegamo/deepcode-cli?color=4d6BFE&labelColor=black&logo=npm&logoColor=white&style=flat-square&cacheSeconds=1800
-[npm-downloads-link]: https://www.npmjs.com/package/@vegamo/deepcode-cli
-[npm-downloads-shield]: https://img.shields.io/npm/dt/@vegamo/deepcode-cli?labelColor=black&style=flat-square&color=4d6BFE&cacheSeconds=1800
-[github-contributors-link]: https://github.com/lessweb/deepcode-cli/graphs/contributors
-[github-contributors-shield]: https://img.shields.io/github/contributors/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
-[github-forks-link]: https://github.com/lessweb/deepcode-cli/network/members
-[github-forks-shield]: https://img.shields.io/github/forks/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
-[github-stars-link]: https://github.com/lessweb/deepcode-cli/network/stargazers
-[github-stars-shield]: https://img.shields.io/github/stars/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
-[github-issues-link]: https://github.com/lessweb/deepcode-cli/issues
-[github-issues-shield]: https://img.shields.io/github/issues/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
-[github-issues-pr-link]: https://github.com/lessweb/deepcode-cli/pulls
-[github-issues-pr-shield]: https://img.shields.io/github/issues-pr/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
-[github-license-link]: https://github.com/lessweb/deepcode-cli/blob/main/LICENSE
-[github-license-shield]: https://img.shields.io/github/license/lessweb/deepcode-cli?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[npm-release-link]: https://www.npmjs.com/package/deepcode-cli-cn
+[npm-release-shield]: https://img.shields.io/npm/v/deepcode-cli-cn?color=4d6BFE&labelColor=black&logo=npm&logoColor=white&style=flat-square&cacheSeconds=1800
+[npm-downloads-link]: https://www.npmjs.com/package/deepcode-cli-cn
+[npm-downloads-shield]: https://img.shields.io/npm/dt/deepcode-cli-cn?labelColor=black&style=flat-square&color=4d6BFE&cacheSeconds=1800
+[github-contributors-link]: https://github.com/00xjuno/deepcode-cli-cn/graphs/contributors
+[github-contributors-shield]: https://img.shields.io/github/contributors/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[github-forks-link]: https://github.com/00xjuno/deepcode-cli-cn/network/members
+[github-forks-shield]: https://img.shields.io/github/forks/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[github-stars-link]: https://github.com/00xjuno/deepcode-cli-cn/network/stargazers
+[github-stars-shield]: https://img.shields.io/github/stars/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[github-issues-link]: https://github.com/00xjuno/deepcode-cli-cn/issues
+[github-issues-shield]: https://img.shields.io/github/issues/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[github-issues-pr-link]: https://github.com/00xjuno/deepcode-cli-cn/pulls
+[github-issues-pr-shield]: https://img.shields.io/github/issues-pr/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800
+[github-license-link]: https://github.com/00xjuno/deepcode-cli-cn/blob/main/LICENSE
+[github-license-shield]: https://img.shields.io/github/license/00xjuno/deepcode-cli-cn?color=4d6BFE&labelColor=black&style=flat-square&cacheSeconds=1800

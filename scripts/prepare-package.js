@@ -103,7 +103,7 @@ if (!isValidSemver(version)) {
   fail(`Invalid semver version: ${version}`);
 }
 
-const TOTAL_STEPS = 11;
+const TOTAL_STEPS = 12;
 
 // ── Banner ───────────────────────────────────────────────────────────────────
 
@@ -210,9 +210,16 @@ step(6, TOTAL_STEPS, "Building packages...");
 run("npm", ["run", "build"], { dryRun });
 ok("Build complete");
 
+// ── 7. Verify ────────────────────────────────────────────────────────────────
+
+step(7, TOTAL_STEPS, "Running release verification...");
+
+run("node", ["scripts/verify.js"], { dryRun, label: "npm run verify" });
+ok("Verification passed");
+
 // ── 7. Publish core ──────────────────────────────────────────────────────────
 
-step(7, TOTAL_STEPS, "Publishing @vegamo/deepcode-core...");
+step(8, TOTAL_STEPS, "Publishing @vegamo/deepcode-core...");
 
 const corePublishArgs = [
   "publish",
@@ -231,7 +238,7 @@ ok(`Published @vegamo/deepcode-core@${version}`);
 
 // ── 8. Patch CLI deps & publish ──────────────────────────────────────────────
 
-step(8, TOTAL_STEPS, "Patching CLI dependencies and publishing @vegamo/deepcode-cli...");
+step(9, TOTAL_STEPS, "Patching CLI dependencies and publishing @vegamo/deepcode-cli...");
 
 // Replace file:../core with ^version for npm
 const patchedCliPkg = readJson(cliPkgPath);
@@ -271,7 +278,7 @@ if (!dryRun) {
 
 // ── 9. Build root bundle ──────────────────────────────────────────────────────
 
-step(9, TOTAL_STEPS, "Building root bundle for deepcode-cli-cn...");
+step(10, TOTAL_STEPS, "Building root bundle for deepcode-cli-cn...");
 
 // The esbuild bundle now outputs to root dist/cli.js (fully self-contained)
 run("npm", ["run", "bundle"], { dryRun, label: "npm run bundle (root)" });
@@ -279,17 +286,9 @@ ok("Root dist/cli.js built");
 
 // ── 10. Publish root package ──────────────────────────────────────────────────
 
-step(10, TOTAL_STEPS, "Publishing deepcode-cli-cn...");
+step(11, TOTAL_STEPS, "Publishing deepcode-cli-cn...");
 
-const rootPublishArgs = [
-  "publish",
-  "--access",
-  "public",
-  "--tag",
-  tag,
-  "--registry",
-  "https://registry.npmjs.org",
-];
+const rootPublishArgs = ["publish", "--access", "public", "--tag", tag, "--registry", "https://registry.npmjs.org"];
 if (dryRun) rootPublishArgs.push("--dry-run");
 
 run("npm", rootPublishArgs, { dryRun, label: `npm ${rootPublishArgs.join(" ")}` });
@@ -297,7 +296,7 @@ ok(`Published deepcode-cli-cn@${version}`);
 
 // ── 11. Git commit + tag ──────────────────────────────────────────────────────
 
-step(11, TOTAL_STEPS, "Creating git commit and tag...");
+step(12, TOTAL_STEPS, "Creating git commit and tag...");
 
 if (!dryRun) {
   run("git", ["add", "packages/core/package.json", "packages/cli/package.json", "package.json"], {

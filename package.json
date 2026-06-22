@@ -1,6 +1,6 @@
 {
   "name": "deepcode-cli-cn",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "description": "Deep Code CLI 全中文汉化版 — 终端里的中文 AI 编程助手",
   "license": "MIT",
   "packageManager": "npm@10.9.4",
@@ -43,6 +43,7 @@
     "test": "npm run test --workspaces --if-present",
     "release:version": "node scripts/version.js",
     "prepare:package": "node scripts/prepare-package.js",
+    "verify": "npm run check && npm run build && npm run bundle && node scripts/verify.js",
     "prepare": "node -e \"try{require('husky')}catch(e){}\""
   },
   "engines": {
