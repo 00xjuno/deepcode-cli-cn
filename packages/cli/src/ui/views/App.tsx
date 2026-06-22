@@ -31,7 +31,7 @@ import {
   isCurrentSessionEmpty,
   renderRawModeMessages,
 } from "../utils";
-import { resolveCurrentSettings, writeModelConfigSelection } from "@vegamo/deepcode-core";
+import { resolveCurrentSettings, writeModelConfigSelection, fetchBalance, formatBalance } from "@vegamo/deepcode-core";
 import { isCollapsedThinking } from "../core/thinking-state";
 import { ANSI_CLEAR_SCREEN } from "../constants";
 import type {
@@ -126,6 +126,9 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
   const [nowTick, setNowTick] = useState(0);
   const [mcpStatuses, setMcpStatuses] = useState<ReturnType<typeof sessionManager.getMcpStatus>>([]);
   const [showProcessStdout, setShowProcessStdout] = useState(false);
+  const [balanceText, setBalanceText] = useState<string | null>(null);
+  const balanceTextRef = useRef<string | null>(null);
+  balanceTextRef.current = balanceText;
 
   rawModeRef.current = mode;
   messagesRef.current = messages;
@@ -144,7 +147,7 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
         }
       },
       onSessionEntryUpdated: (entry) => {
-        setStatusLine(buildStatusLine(entry));
+        setStatusLine(buildStatusLine(entry, balanceTextRef.current));
         setRunningProcesses(entry.processes);
         setActiveStatus(entry.status);
         setActiveAskPermissions(entry.askPermissions);
@@ -210,6 +213,35 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
     const id = setInterval(() => setNowTick((tick) => tick + 1), 500);
     return () => clearInterval(id);
   }, [busy]);
+
+  // 定期查询 DeepSeek 余额
+  useEffect(() => {
+    const apiKey = resolvedSettings.apiKey;
+    if (!apiKey) {
+      setBalanceText(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    const refreshBalance = async () => {
+      const result = await fetchBalance(apiKey, resolvedSettings.baseURL);
+      if (cancelled) return;
+      const text = formatBalance(result);
+      if (cancelled) return;
+      setBalanceText(text);
+    };
+
+    // 立即查询
+    void refreshBalance();
+
+    // 每 5 分钟刷新
+    const interval = setInterval(() => void refreshBalance(), 5 * 60 * 1000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [resolvedSettings.apiKey, resolvedSettings.baseURL]);
 
   function loadVisibleMessages(manager: SessionManager, sessionId: string): SessionMessage[] {
     return manager.listSessionMessages(sessionId).filter((m) => m.visible);
@@ -494,7 +526,7 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
       // Clear first so <Static> resets its index to 0.
       resetStaticView(loadVisibleMessages(sessionManager, sessionId), { clearScreen: true });
       const session = sessionManager.getSession(sessionId);
-      setStatusLine(session ? buildStatusLine(session) : "");
+      setStatusLine(session ? buildStatusLine(session, balanceTextRef.current) : "");
       setRunningProcesses(session?.processes ?? null);
       setActiveStatus(session?.status ?? null);
       setActiveAskPermissions(session?.askPermissions);

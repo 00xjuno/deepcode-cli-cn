@@ -77,11 +77,14 @@ export function isCurrentSessionEmpty(sessionManager: SessionManager): boolean {
   return !activeSessionId || !sessionManager.getSession(activeSessionId);
 }
 
-export function buildStatusLine(entry: SessionEntry): string {
+export function buildStatusLine(entry: SessionEntry, balance?: string | null): string {
   const parts: string[] = [];
   parts.push(`status: ${entry.status}`);
   if (typeof entry.activeTokens === "number" && entry.activeTokens > 0) {
     parts.push(`tokens: ${entry.activeTokens}`);
+  }
+  if (balance) {
+    parts.push(`余额: ${balance}`);
   }
   if (entry.failReason) {
     parts.push(`fail: ${entry.failReason}`);

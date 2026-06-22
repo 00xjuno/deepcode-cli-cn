@@ -88,6 +88,10 @@ export { McpManager } from "./mcp/mcp-manager";
 export { McpClient } from "./mcp/mcp-client";
 export type { McpServerStatus } from "./mcp/mcp-manager";
 
+// Balance
+export { fetchBalance, formatBalance, clearBalanceCache } from "./common/balance";
+export type { BalanceResult, BalanceInfo } from "./common/balance";
+
 // Common utilities
 export { createOpenAIClient } from "./common/openai-client";
 export { buildThinkingRequestOptions } from "./common/openai-thinking";
