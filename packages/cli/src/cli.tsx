@@ -1,6 +1,7 @@
+import * as readline from "node:readline";
 import React from "react";
 import { render } from "ink";
-import { setShellIfWindows } from "@vegamo/deepcode-core";
+import { readSettings, writeSettings, setShellIfWindows, type DeepcodingSettings } from "@vegamo/deepcode-core";
 import { checkForNpmUpdate, promptForPendingUpdate, type PackageInfo } from "./common/update-check";
 import { AppContainer } from "./ui";
 
@@ -25,6 +26,7 @@ if (args.includes("--help") || args.includes("-h")) {
       "  deepcode --help                       Show this help",
       "",
       "Configuration:",
+      "  First run will guide you through API key setup interactively.",
       "  ~/.deepcode/settings.json    User-level API key, model, base URL",
       "  ./.deepcode/settings.json    Project-level settings",
       "  ./.deepcode/skills/*/SKILL.md Project-level native skills",
@@ -77,7 +79,67 @@ if (!process.stdin.isTTY) {
 
 void main();
 
+// 首次运行时交互式配置 API Key
+async function setupApiKey(): Promise<void> {
+  const existingSettings = readSettings();
+  const hasApiKey = !!existingSettings?.env?.API_KEY;
+  if (hasApiKey) return;
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const question = (prompt: string): Promise<string> =>
+    new Promise((resolve) => {
+      rl.question(prompt, (answer: string) => {
+        resolve(answer.trim());
+      });
+    });
+
+  process.stdout.write("\n");
+  process.stdout.write("  ╔══════════════════════════════════════════════╗\n");
+  process.stdout.write("  ║       🐳 Deep Code CLI — 首次配置            ║\n");
+  process.stdout.write("  ╠══════════════════════════════════════════════╣\n");
+  process.stdout.write("  ║                                              ║\n");
+  process.stdout.write("  ║  未检测到 API Key，请输入你的 DeepSeek 密钥    ║\n");
+  process.stdout.write("  ║                                              ║\n");
+  process.stdout.write("  ║  获取方式:                                    ║\n");
+  process.stdout.write("  ║  https://platform.deepseek.com/api_keys       ║\n");
+  process.stdout.write("  ║                                              ║\n");
+  process.stdout.write("  ╚══════════════════════════════════════════════╝\n\n");
+
+  let apiKey = "";
+  while (!apiKey) {
+    apiKey = await question("  API Key (sk-...): ");
+    if (!apiKey) {
+      process.stdout.write("  ⚠️  API Key 不能为空，请重新输入\n");
+    }
+  }
+
+  // 合并已有设置
+  const settings: DeepcodingSettings = {
+    ...(existingSettings ?? {}),
+    env: {
+      ...(existingSettings?.env ?? {}),
+      MODEL: existingSettings?.env?.MODEL || existingSettings?.model || "deepseek-v4-pro",
+      BASE_URL: existingSettings?.env?.BASE_URL || "https://api.deepseek.com",
+      API_KEY: apiKey,
+    },
+    thinkingEnabled: existingSettings?.thinkingEnabled ?? true,
+    reasoningEffort: existingSettings?.reasoningEffort ?? "max",
+  };
+
+  writeSettings(settings);
+  rl.close();
+
+  process.stdout.write(`\n  ✅ 配置已保存到 ~/.deepcode/settings.json\n`);
+  process.stdout.write(`  🚀 正在启动 Deep Code CLI...\n\n`);
+}
+
 async function main(): Promise<void> {
+  await setupApiKey();
+
   const updatePromptResult = await promptForPendingUpdate(packageInfo);
   if (updatePromptResult.installed) {
     process.exit(0);
