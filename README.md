@@ -26,6 +26,8 @@ npm install -g deepcode-cli-cn
 
 在任意项目目录下运行 `deepcode` 即可启动。首次运行将自动引导配置 API Key，无需手动编辑配置文件。
 
+![intro-cn](resources/intro-cn.png)
+
 ## 配置
 
 首次运行时会自动弹出配置向导，输入 DeepSeek API Key 即可。也可手动创建 `~/.deepcode/settings.json`：

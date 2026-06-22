@@ -911,7 +911,7 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
           onRawModeChange={handleRawModeChange}
           onInterrupt={handleInterrupt}
           onToggleProcessStdout={handleToggleProcessStdout}
-          placeholder="Type your message..."
+          placeholder="输入消息…"
         />
       )}
     </Box>

@@ -27,6 +27,8 @@ npm install -g deepcode-cli-cn
 
 Run `deepcode` inside any project directory to get started. On first run, an interactive setup wizard will guide you through configuring your API key — no manual file editing required.
 
+![intro-cn](resources/intro-cn.png)
+
 ## Configuration
 
 Create `~/.deepcode/settings.json`:
