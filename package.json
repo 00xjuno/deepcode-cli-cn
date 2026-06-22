@@ -1,6 +1,7 @@
 {
-  "name": "@vegamo/deepcode",
-  "description": "Deep Code — CLI, core library, and VSCode companion",
+  "name": "deepcode-cli-cn",
+  "version": "0.1.31",
+  "description": "Deep Code CLI 全中文汉化版 — 终端里的中文 AI 编程助手",
   "license": "MIT",
   "packageManager": "npm@10.9.4",
   "type": "module",
@@ -9,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lessweb/deepcode-cli.git"
+    "url": "git+https://github.com/00xjuno/deepcode-cli-cn.git"
   },
   "scripts": {
     "typecheck": "npm run typecheck --workspaces --if-present",
