@@ -140,9 +140,7 @@ export function AskUserQuestionPrompt({ questions, onSubmit, onCancel }: Props):
     const answer = buildAnswerForQuestion(question, options[cursorIndex], selectedForQuestion, otherText);
     if (!answer) {
       setStatusMessage(
-        question.multiSelect
-          ? "Select at least one option with Space, or type an Other answer."
-          : "Select an option, or type an Other answer."
+        question.multiSelect ? "用空格至少选择一个选项，或输入自定义答案。" : "选择一个选项，或输入自定义答案。"
       );
       return;
     }
@@ -166,7 +164,7 @@ export function AskUserQuestionPrompt({ questions, onSubmit, onCancel }: Props):
     <Box flexDirection="column" borderStyle="round" borderColor="yellow" paddingX={1} marginY={1}>
       <Box marginBottom={1}>
         <Text color="yellow" bold>
-          Answer questions
+          回答问题
         </Text>
         <Text dimColor>
           {" "}
@@ -202,7 +200,7 @@ export function AskUserQuestionPrompt({ questions, onSubmit, onCancel }: Props):
                       {isCursor ? <Text color="cyanBright">▌</Text> : null}
                     </Text>
                   ) : (
-                    <Text dimColor>{isCursor ? "type your answer here" : "type a custom answer"}</Text>
+                    <Text dimColor>{isCursor ? "在此输入你的答案" : "输入自定义答案"}</Text>
                   )}
                 </Box>
               ) : null}
@@ -215,10 +213,10 @@ export function AskUserQuestionPrompt({ questions, onSubmit, onCancel }: Props):
         <Text dimColor>
           {statusMessage ??
             (isCurrentOther
-              ? "Type your answer · Backspace edit · Enter submit/next · ↑ choose presets · Esc type manually"
+              ? "输入答案 · Backspace 编辑 · 回车 提交/下一步 · ↑ 选择预设 · Esc 手动输入"
               : question.multiSelect
-                ? "↑/↓ move · Space toggle · Enter submit/next · Esc type manually"
-                : "↑/↓ move · Enter select/next · Esc type manually")}
+                ? "↑/↓ 移动 · 空格 切换 · 回车 提交/下一步 · Esc 手动输入"
+                : "↑/↓ 移动 · 回车 选择/下一步 · Esc 手动输入")}
         </Text>
       </Box>
     </Box>
@@ -236,7 +234,7 @@ function buildOptions(question: AskUserQuestionItem | undefined): OptionEntry[] 
       value: option.label,
     })),
     {
-      label: "Other",
+      label: "其他",
       value: OTHER_VALUE,
       isOther: true,
     },

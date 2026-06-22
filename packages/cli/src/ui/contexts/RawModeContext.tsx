@@ -2,25 +2,25 @@ import React, { createContext, useCallback, useContext, useRef, useState } from 
 import type { DropdownMenuItem } from "../components/DropdownMenu";
 
 export enum RawMode {
-  None = "Normal mode",
-  Lite = "Lite mode",
-  Raw = "Raw scrollback mode",
+  None = "普通模式",
+  Lite = "精简模式",
+  Raw = "原始回滚模式",
 }
 export const RAW_COMMAND_MODELS: DropdownMenuItem[] = [
   {
-    label: "Lite mode",
+    label: "精简模式",
     key: RawMode.Lite,
-    description: "Collapse chain-of-thought reasoning.",
+    description: "折叠思维链推理内容。",
   },
   {
-    label: "Normal mode",
+    label: "普通模式",
     key: RawMode.None,
-    description: "Show full chain-of-thought reasoning.",
+    description: "显示完整思维链推理内容。",
   },
   {
-    label: "Raw scrollback mode",
+    label: "原始回滚模式",
     key: RawMode.Raw,
-    description: "Show scrollback mode for copy-friendly terminal selection.",
+    description: "显示回滚模式，方便终端复制。",
   },
 ] as const;
 

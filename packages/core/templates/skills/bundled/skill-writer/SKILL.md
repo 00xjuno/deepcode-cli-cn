@@ -1,6 +1,6 @@
 ---
 name: skill-writer
-description: Guide users through creating, updating, debugging, and validating Agent Skills for AI agents. Use when the user wants to create, write, author, design, troubleshoot, validate, or improve a Skill, or needs help with SKILL.md, frontmatter, or skill structure.
+description: 指导用户创建、更新、调试和验证 AI 智能体的 Agent Skills。当用户想要创建、编写、设计、排查、验证或改进 Skill，或需要 SKILL.md、frontmatter 或 skill 结构方面的帮助时使用。 for AI agents. Use when the user wants to create, write, author, design, troubleshoot, validate, or improve a Skill, or needs help with SKILL.md, frontmatter, or skill structure.
 ---
 
 # Skill Writer

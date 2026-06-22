@@ -67,7 +67,7 @@ const DropdownMenu = React.memo(function DropdownMenu({
   titleColor = "#229ac3",
   activeColor = "cyanBright",
   helpText,
-  emptyText = "No items found",
+  emptyText = "未找到项目",
   renderItem,
 }: DropdownMenuProps): React.ReactElement | null {
   // Calculate visible window

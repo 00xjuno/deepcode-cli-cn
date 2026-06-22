@@ -54,8 +54,8 @@ const SkillsDropdown: React.FC<{
   return (
     <DropdownMenu
       width={width}
-      title="Select Skills"
-      helpText="Space toggle · Enter toggle · Esc to close"
+      title="选择 Skills"
+      helpText="空格 切换 · 回车 切换 · Esc 关闭"
       emptyText="No skills found"
       items={skills.map((skill) => ({
         key: skill.path || skill.name,

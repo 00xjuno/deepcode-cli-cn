@@ -187,21 +187,21 @@ export const PromptInput = React.memo(function PromptInput({
   const promptHistoryKey = React.useMemo(() => promptHistory.join("\0"), [promptHistory]);
   const hasRunningProcess = runningProcesses && runningProcesses.size > 0;
   const processOrPasteHint = hasRunningProcess
-    ? " · ctrl+o view output"
+    ? " · Ctrl+O 查看输出"
     : hasCollapsedMarkers
-      ? " · ctrl+o expand"
+      ? " · Ctrl+O 展开"
       : hasExpandedRegions
-        ? " · ctrl+o collapse"
+        ? " · Ctrl+O 折叠"
         : "";
   const busyStatusText =
     loadingText && loadingText.trim()
       ? `${loadingText}${processOrPasteHint}`
-      : `esc to interrupt · ctrl+c to cancel input${processOrPasteHint}`;
+      : `Esc 中断 · Ctrl+C 取消输入${processOrPasteHint}`;
   const footerText = statusMessage
     ? statusMessage
     : busy
       ? busyStatusText
-      : `enter send · shift+enter newline · @ files · ctrl+v image · / commands · ctrl+d exit${processOrPasteHint}`;
+      : `回车 发送 · Shift+回车 换行 · @ 文件 · Ctrl+V 图片 · / 命令 · Ctrl+D 退出${processOrPasteHint}`;
   const showFooterText = useMemo(
     () => showMenu || showSkillsDropdown || openRawModelDropdown || showModelDropdown || showFileMentionMenu,
     [showMenu, showSkillsDropdown, showModelDropdown, openRawModelDropdown, showFileMentionMenu]
@@ -357,7 +357,7 @@ export const PromptInput = React.memo(function PromptInput({
         }
         lastCtrlDAt.current = now;
         setPendingExit(true);
-        setStatusMessage("press ctrl+d again to exit");
+        setStatusMessage("再次按 Ctrl+D 退出");
         return;
       }
 
@@ -370,7 +370,7 @@ export const PromptInput = React.memo(function PromptInput({
           clearUndoRedoStacks();
           resetPastes();
         } else {
-          setStatusMessage("press ctrl+d to exit");
+          setStatusMessage("按 Ctrl+D 退出");
         }
         return;
       }
@@ -393,18 +393,18 @@ export const PromptInput = React.memo(function PromptInput({
       }
 
       if (key.ctrl && (input === "v" || input === "V")) {
-        setStatusMessage("Reading clipboard...");
+        setStatusMessage("读取剪贴板中...");
         readClipboardImageAsync()
           .then((image) => {
             if (image) {
               setImageUrls((prev) => [...prev, image.dataUrl]);
-              setStatusMessage("Attached image from clipboard");
+              setStatusMessage("已从剪贴板附加图片");
             } else {
-              setStatusMessage("No image found in clipboard");
+              setStatusMessage("剪贴板中未找到图片");
             }
           })
           .catch(() => {
-            setStatusMessage("Failed to read clipboard");
+            setStatusMessage("读取剪贴板失败");
           });
         return;
       }
@@ -412,9 +412,9 @@ export const PromptInput = React.memo(function PromptInput({
       if (isClearImageAttachmentsShortcut(input, key)) {
         if (imageUrls.length > 0) {
           setImageUrls([]);
-          setStatusMessage("Cleared attached images");
+          setStatusMessage("已清除附加的图片");
         } else {
-          setStatusMessage("No attached images to clear");
+          setStatusMessage("没有可清除的附加图片");
         }
         return;
       }
@@ -448,7 +448,7 @@ export const PromptInput = React.memo(function PromptInput({
       }
 
       if (busy && isPlainReturn) {
-        setStatusMessage("wait for the current response or press esc to interrupt");
+        setStatusMessage("等待当前回复完成或按 Esc 中断");
         return;
       }
 
@@ -772,7 +772,7 @@ export const PromptInput = React.memo(function PromptInput({
           <Text color="magenta" wrap="truncate-end">
             {formatSelectedSkillsStatus(selectedSkills)}
           </Text>
-          <Text dimColor> (use /skills to edit)</Text>
+          <Text dimColor> (使用 /skills 编辑)</Text>
         </Box>
       ) : null}
       {/* Input */}
@@ -843,7 +843,7 @@ export const PromptInput = React.memo(function PromptInput({
   );
 });
 
-export const IMAGE_ATTACHMENT_CLEAR_HINT = "ctrl+x clear images";
+export const IMAGE_ATTACHMENT_CLEAR_HINT = "Ctrl+X 清除图片";
 
 export function formatImageAttachmentStatus(count: number): string {
   if (count <= 0) {

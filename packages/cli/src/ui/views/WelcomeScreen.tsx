@@ -20,13 +20,13 @@ const TITLE_PANEL_WIDTH = 70;
 const PANEL_CONTENT_HEIGHT = 8;
 
 const SHORTCUT_TIPS = [
-  { label: "Enter", description: "Send the prompt" },
-  { label: "Shift+Enter", description: "Insert a newline" },
-  { label: "Ctrl+V", description: "Paste an image from the clipboard" },
-  { label: "Ctrl+R", description: "Open raw display mode selection" },
-  { label: "Esc", description: "Interrupt the current model turn" },
-  { label: "/", description: "Open the skills and commands menu" },
-  { label: "Ctrl+D twice", description: "Quit Deep Code CLI" },
+  { label: "回车", description: "发送提示词" },
+  { label: "Shift+回车", description: "插入换行" },
+  { label: "Ctrl+V", description: "从剪贴板粘贴图片" },
+  { label: "Ctrl+R", description: "打开原始显示模式选择" },
+  { label: "Esc", description: "中断当前模型回复" },
+  { label: "/", description: "打开 skills 和命令菜单" },
+  { label: "连续 Ctrl+D", description: "退出 Deep Code CLI" },
 ];
 
 export function WelcomeScreen({ projectRoot, settings, skills, width }: WelcomeScreenProps): React.ReactElement {
@@ -58,14 +58,17 @@ export function WelcomeScreen({ projectRoot, settings, skills, width }: WelcomeS
             paddingX={1}
           >
             <Box flexGrow={1} marginBottom={compact ? 1 : 0}>
-              <Text color={"#229ac3e6"}>{">"}_ Deep Code </Text>
+              <Text color={"#229ac3e6"}>{">"} Deep Code </Text>
               <Text color="gray"> (v{version || "unknown"})</Text>
             </Box>
             {!compact ? <Text> </Text> : null}
-            <SettingRow label="Model" value={settings.model} />
-            <SettingRow label="Thinking Enabled" value={String(settings.thinkingEnabled)} />
-            <SettingRow label="Reasoning Effort" value={settings.thinkingEnabled ? settings.reasoningEffort : "-"} />
-            <SettingRow label="CWD" value={cwd} />
+            <SettingRow label="模型" value={settings.model} />
+            <SettingRow label="思考模式" value={settings.thinkingEnabled ? "开启" : "关闭"} />
+            <SettingRow
+              label="推理强度"
+              value={settings.thinkingEnabled ? (settings.reasoningEffort === "max" ? "最大" : "高") : "-"}
+            />
+            <SettingRow label="工作目录" value={cwd} />
           </Box>
         </Box>
       </Box>
@@ -74,7 +77,7 @@ export function WelcomeScreen({ projectRoot, settings, skills, width }: WelcomeS
         {tip ? (
           <Box marginTop={1}>
             <Text dimColor>
-              Tips: {tip.label} - {tip.description}
+              提示: {tip.label} - {tip.description}
             </Text>
           </Box>
         ) : null}

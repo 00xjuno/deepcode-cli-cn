@@ -254,8 +254,8 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
   if (sessions.length === 0) {
     return (
       <Box flexDirection="column">
-        <Text color="yellow">No previous sessions found.</Text>
-        <Text dimColor>Press Esc to go back.</Text>
+        <Text color="yellow">没有找到历史会话。</Text>
+        <Text dimColor>按 Esc 返回。</Text>
       </Box>
     );
   }
@@ -274,17 +274,17 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
         <Box paddingX={1} flexDirection="column">
           <Box>
             <Text bold color="cyanBright">
-              Resume a session
+              恢复会话
             </Text>
             <Text bold color="#229ac3">
               {" "}
-              ({sessions.length} total
-              {hasActiveSearch ? `, ${filteredSessions.length} matched` : ""})
+              ({sessions.length} 个会话
+              {hasActiveSearch ? `, ${filteredSessions.length} 个匹配` : ""})
             </Text>
           </Box>
           {/* Search bar */}
           <Box marginTop={hasActiveSearch || searchQuery ? 0 : 0}>
-            <Text dimColor>{searchQuery ? `Search: ${searchQuery}` : "Type to search\u2026"}</Text>
+            <Text dimColor>{searchQuery ? `搜索: ${searchQuery}` : "输入搜索\u2026"}</Text>
             {searchQuery ? <Text bold>|</Text> : null}
           </Box>
         </Box>
@@ -304,7 +304,7 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
         >
           {filteredSessions.length === 0 ? (
             <Box paddingY={1}>
-              <Text color="yellow">No sessions match "{searchQuery}".</Text>
+              <Text color="yellow">没有会话匹配 "{searchQuery}"。</Text>
             </Box>
           ) : (
             visibleSessions.map((session, i) => {
@@ -321,17 +321,17 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
                     <Box width={"100%"}>
                       {isRenaming ? (
                         <Text color="yellow">
-                          Rename: {renameValue.slice(0, renameCursor)}
+                          重命名: {renameValue.slice(0, renameCursor)}
                           <Text bold>|</Text>
                           {renameValue.slice(renameCursor)}
                         </Text>
                       ) : (
                         <Text {...(isSelected ? { bold: true } : {})} color={isSelected ? "#229ac3" : undefined}>
-                          {formatSessionTitle(session.summary || "Untitled")}
+                          {formatSessionTitle(session.summary || "无标题")}
                         </Text>
                       )}
                       {isConfirming ? (
-                        <Text color="yellow"> [Delete? Enter=yes, Esc=no]</Text>
+                        <Text color="yellow"> [删除? 回车=确认, Esc=取消]</Text>
                       ) : isRenaming ? null : (
                         <Text dimColor> ({formatSessionStatus(session.status)})</Text>
                       )}
@@ -346,9 +346,9 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
           )}
           {scrollOffset > 0 || scrollOffset + maxVisibleSessions < filteredSessions.length ? (
             <Box marginTop={1}>
-              {scrollOffset > 0 ? <Text dimColor>… {scrollOffset} sessions above. </Text> : null}
+              {scrollOffset > 0 ? <Text dimColor>… {scrollOffset} 个会话在上方。 </Text> : null}
               {scrollOffset + maxVisibleSessions < filteredSessions.length ? (
-                <Text dimColor>… {filteredSessions.length - scrollOffset - maxVisibleSessions} sessions below.</Text>
+                <Text dimColor>… {filteredSessions.length - scrollOffset - maxVisibleSessions} 个会话在下方。</Text>
               ) : null}
             </Box>
           ) : null}
@@ -357,23 +357,23 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
         <Box flexDirection="column">
           {renameSessionId ? (
             <Box>
-              <Text color="yellow">Input new session name, </Text>
+              <Text color="yellow">输入新会话名称, </Text>
               <Text bold color="green">
                 Enter
               </Text>
-              <Text dimColor> to save · </Text>
+              <Text dimColor> 保存 · </Text>
               <Text bold color="red">
                 Esc
               </Text>
-              <Text dimColor> to cancel</Text>
+              <Text dimColor> 取消</Text>
             </Box>
           ) : confirmDeleteSessionId ? (
             <Box>
-              <Text color="yellow">Delete this session? </Text>
+              <Text color="yellow">删除此会话? </Text>
               <Text bold color="green">
                 Enter
               </Text>
-              <Text dimColor> to confirm · </Text>
+              <Text dimColor> 确认 · </Text>
               <Text bold color="red">
                 Esc
               </Text>
@@ -381,13 +381,13 @@ export function SessionList({ sessions, onSelect, onCancel, onDelete, onRename }
             </Box>
           ) : hasActiveSearch ? (
             <Box>
-              <Text dimColor>Esc clear search · </Text>
-              <Text dimColor>↑/↓ navigate · Enter select · Esc again to cancel</Text>
+              <Text dimColor>Esc 清除搜索 · </Text>
+              <Text dimColor>↑/↓ 导航 · 回车 选择 · Esc 再次取消</Text>
             </Box>
           ) : (
             <Box>
               <Text dimColor>
-                Type to search · ↑/↓ navigate · PgUp/PgDn page · Enter select · Esc cancel · Del delete · Ctrl+r rename
+                输入搜索 · ↑/↓ 导航 · PgUp/PgDn 翻页 · 回车 选择 · Esc 取消 · Del 删除 · Ctrl+R 重命名
               </Text>
             </Box>
           )}
@@ -416,21 +416,21 @@ export function formatSessionTitle(value: string, max = 70): string {
 export function formatSessionStatus(status: SessionStatus): string {
   switch (status) {
     case "completed":
-      return "done";
+      return "已完成";
     case "processing":
-      return "running";
+      return "运行中";
     case "pending":
-      return "pending";
+      return "等待中";
     case "waiting_for_user":
-      return "waiting";
+      return "等待用户";
     case "failed":
-      return "failed";
+      return "失败";
     case "interrupted":
-      return "stopped";
+      return "已停止";
     case "ask_permission":
-      return "waiting";
+      return "等待权限";
     case "permission_denied":
-      return "denied";
+      return "已拒绝";
     default:
       return status;
   }

@@ -82,8 +82,8 @@ export function UndoSelector({ targets, onSelect, onCancel }: Props): React.Reac
   if (targets.length === 0) {
     return (
       <Box flexDirection="column" marginTop={1}>
-        <Text color="yellow">Nothing to undo yet.</Text>
-        <Text dimColor>Press Esc to go back.</Text>
+        <Text color="yellow">暂无可以撤销的内容。</Text>
+        <Text dimColor>按 Esc 返回。</Text>
       </Box>
     );
   }
@@ -100,9 +100,9 @@ export function UndoSelector({ targets, onSelect, onCancel }: Props): React.Reac
       <Box flexDirection="column" borderStyle="round" borderDimColor flexGrow={1} overflow="hidden">
         <Box paddingX={1}>
           <Text bold color="#229ac3">
-            Undo
+            撤销
           </Text>
-          <Text dimColor> restore to the point before a prompt</Text>
+          <Text dimColor> 恢复到某条提示词之前的状态</Text>
         </Box>
         {phase === "message" ? (
           <Box
@@ -129,7 +129,7 @@ export function UndoSelector({ targets, onSelect, onCancel }: Props): React.Reac
                     </Text>
                     <Text dimColor>
                       {formatTimestamp(target.message.createTime)}
-                      {target.canRestoreCode ? " · code checkpoint available" : " · conversation only"}
+                      {target.canRestoreCode ? " · 代码检查点可用" : " · 仅对话"}
                     </Text>
                   </Box>
                 </Box>
@@ -149,30 +149,26 @@ export function UndoSelector({ targets, onSelect, onCancel }: Props): React.Reac
             paddingX={1}
             overflow="hidden"
           >
-            <Text dimColor>Selected prompt:</Text>
+            <Text dimColor>已选提示词:</Text>
             <Text>{formatUndoMessage(selectedTarget?.message.content ?? "")}</Text>
             <Box marginTop={1} flexDirection="column">
               <Text color={modeIndex === 0 ? "cyanBright" : undefined}>
-                {modeIndex === 0 ? "> " : "  "}Restore code and conversation
+                {modeIndex === 0 ? "> " : "  "}恢复代码和对话
               </Text>
               <Text dimColor>
                 {"  "}
                 {selectedTarget?.canRestoreCode
-                  ? "Restore files from the recorded Git checkpoint, then fork the conversation."
-                  : "No code checkpoint is recorded for this prompt."}
+                  ? "从记录的 Git 检查点恢复文件，然后分叉对话。"
+                  : "此提示词没有记录的代码检查点。"}
               </Text>
-              <Text color={modeIndex === 1 ? "cyanBright" : undefined}>
-                {modeIndex === 1 ? "> " : "  "}Restore conversation
-              </Text>
-              <Text dimColor>{"  "}Fork the conversation without changing files.</Text>
+              <Text color={modeIndex === 1 ? "cyanBright" : undefined}>{modeIndex === 1 ? "> " : "  "}仅恢复对话</Text>
+              <Text dimColor>{"  "}分叉对话但不更改文件。</Text>
             </Box>
           </Box>
         )}
         <Box>
           <Text dimColor>
-            {phase === "message"
-              ? "↑/↓ navigate · Enter choose · Esc cancel"
-              : "↑/↓ choose restore mode · Enter restore · Esc back"}
+            {phase === "message" ? "↑/↓ 导航 · 回车 选择 · Esc 取消" : "↑/↓ 选择恢复模式 · 回车 恢复 · Esc 返回"}
           </Text>
         </Box>
       </Box>

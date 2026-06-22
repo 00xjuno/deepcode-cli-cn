@@ -432,7 +432,7 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
       const meta: MessageMeta = {
         isModelChange: true,
       };
-      const content = `/model\n└ Set model to ${selection.model} (${selection?.thinkingEnabled ? selection?.reasoningEffort : "no thinking"})`;
+      const content = `/model\n└ 模型已设置为 ${selection.model} (${selection?.thinkingEnabled ? (selection?.reasoningEffort === "max" ? "最大推理" : "高推理") : "无思考"})`;
 
       if (activeSessionId) {
         sessionManager.addSessionSystemMessage(activeSessionId, content, true, meta);
@@ -456,7 +456,7 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
         ]);
       }
 
-      return `Model settings updated: ${formatModelConfig(current)} → ${formatModelConfig(next)}`;
+      return `模型设置已更新: ${formatModelConfig(current)} → ${formatModelConfig(next)}`;
     },
     [projectRoot, sessionManager]
   );

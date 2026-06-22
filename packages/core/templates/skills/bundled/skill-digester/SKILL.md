@@ -1,6 +1,6 @@
 ---
 name: skill-digester
-description: Reviews and improves another DeepCode skill's SKILL.md description field, and guides Agent Skill installation into user or project .agents/skills roots. Use when the user asks to digest a skill, install an Agent Skill, install a skill to user/project scope, or says "消化技能" or "安装 agent skill".
+description: 审查并改进另一个 DeepCode skill 的 SKILL.md 描述字段，并指导将 Agent Skill 安装到用户或项目 .agents/skills 目录中。当用户要求消化技能、安装 Agent Skill、将 skill 安装到用户/项目范围，或说"消化技能"或"安装 agent skill"时使用。's SKILL.md description field, and guides Agent Skill installation into user or project .agents/skills roots. Use when the user asks to digest a skill, install an Agent Skill, install a skill to user/project scope, or says "消化技能" or "安装 agent skill".
 ---
 
 # Skill Digester

@@ -14,9 +14,9 @@ type ThinkingModeOption = {
 export const MODEL_COMMAND_MODELS = ["deepseek-v4-pro", "deepseek-v4-flash"] as const;
 
 export const MODEL_COMMAND_THINKING_OPTIONS: ThinkingModeOption[] = [
-  { label: "Thinking mode [max]", thinkingEnabled: true, reasoningEffort: "max" },
-  { label: "Thinking mode [high]", thinkingEnabled: true, reasoningEffort: "high" },
-  { label: "No thinking", thinkingEnabled: false },
+  { label: "思考模式 [最大]", thinkingEnabled: true, reasoningEffort: "max" },
+  { label: "思考模式 [高]", thinkingEnabled: true, reasoningEffort: "high" },
+  { label: "无思考", thinkingEnabled: false },
 ];
 
 function getThinkingOptionIndex(config: Pick<ModelConfigSelection, "thinkingEnabled" | "reasoningEffort">): number {
@@ -97,7 +97,7 @@ const ModelsDropdown: React.FC<Props> = ({
       })
       .catch((error) => {
         const msg = error instanceof Error ? error.message : String(error);
-        onStatusMessage?.(`Failed to update model settings: ${msg}`);
+        onStatusMessage?.(`模型设置更新失败: ${msg}`);
       });
   }
 
@@ -138,21 +138,23 @@ const ModelsDropdown: React.FC<Props> = ({
       ? MODEL_COMMAND_MODELS.map((model) => ({
           key: model,
           label: model,
-          description: model === modelConfig.model ? "current model" : "",
+          description: model === modelConfig.model ? "当前模型" : "",
           selected: model === (pendingModel ?? modelConfig.model),
         }))
       : MODEL_COMMAND_THINKING_OPTIONS.map((option, i) => ({
           key: option.label,
           label: option.label,
-          description: option.thinkingEnabled ? `reasoningEffort: ${option.reasoningEffort}` : "thinking disabled",
+          description: option.thinkingEnabled
+            ? `推理强度: ${option.reasoningEffort === "max" ? "最大" : "高"}`
+            : "思考已禁用",
           selected: getThinkingOptionIndex(modelConfig) === i,
         }));
 
   return (
     <DropdownMenu
       width={width}
-      title={step === "model" ? "Select Model" : "Select Thinking Mode"}
-      helpText={step === "model" ? "Space/Enter select model · Esc to cancel" : "Space/Enter apply · Esc to cancel"}
+      title={step === "model" ? "选择模型" : "选择思考模式"}
+      helpText={step === "model" ? "空格/回车 选择模型 · Esc 取消" : "空格/回车 应用 · Esc 取消"}
       items={items}
       activeIndex={activeIndex}
       activeColor="#229ac3"

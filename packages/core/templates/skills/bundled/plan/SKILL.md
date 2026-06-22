@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Plan tasks through a strict non-mutating collaboration workflow before implementation. Use ONLY when the user asks for Plan Mode, planning only or non-mutating exploration.
+description: 在实现之前通过严格的非变更协作工作流来规划任务。仅在用户要求 Plan 模式、仅规划或非变更探索时使用。. Use ONLY when the user asks for Plan Mode, planning only or non-mutating exploration.
 ---
 
 # Plan Mode (Conversational)

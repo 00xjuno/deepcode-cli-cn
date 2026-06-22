@@ -129,7 +129,7 @@ export function PermissionPrompt({ requests, onSubmit, onCancel }: Props): React
     <Box flexDirection="column" borderStyle="round" borderColor="yellow" paddingX={1} marginY={1}>
       <Box marginBottom={1}>
         <Text color="yellow" bold>
-          Permission required
+          需要权限确认
         </Text>
         <Text dimColor>
           {" "}
@@ -140,7 +140,7 @@ export function PermissionPrompt({ requests, onSubmit, onCancel }: Props): React
       <Text>{prompt.request.command}</Text>
       {prompt.request.description ? <Text dimColor>{prompt.request.description}</Text> : null}
       <Box marginTop={1}>
-        <Text>Do you want to proceed?</Text>
+        <Text>是否继续执行?</Text>
       </Box>
       <Box flexDirection="column" marginTop={1}>
         {options.map((option, optionIndex) => (
@@ -151,7 +151,7 @@ export function PermissionPrompt({ requests, onSubmit, onCancel }: Props): React
         ))}
       </Box>
       <Box marginTop={1}>
-        <Text dimColor>↑/↓ move · Enter select · Esc interrupt</Text>
+        <Text dimColor>↑/↓ 移动 · 回车 选择 · Esc 中断</Text>
       </Box>
     </Box>
   );
@@ -180,16 +180,16 @@ function buildScopePrompts(requests: AskPermissionRequest[]): ScopePrompt[] {
 }
 
 function buildOptions(scope: AskPermissionScope): PromptOption[] {
-  const options: PromptOption[] = [{ kind: "allow", label: "Yes" }];
+  const options: PromptOption[] = [{ kind: "allow", label: "是" }];
   if (isAlwaysAllowedScope(scope)) {
     options.push({
       kind: "always",
-      label: "Yes, and always allow ",
+      label: "是, 始终允许 ",
       scopeDescription: describeScope(scope),
       scopeColor: getScopeRiskColor(scope),
     });
   }
-  options.push({ kind: "deny", label: "No" });
+  options.push({ kind: "deny", label: "否" });
   return options;
 }
 
@@ -250,25 +250,25 @@ export function getScopeRiskColor(scope: AskPermissionScope): string {
 function describeScope(scope: PermissionScope): string {
   switch (scope) {
     case "read-in-cwd":
-      return "reads inside this workspace";
+      return "读取工作区内文件";
     case "read-out-cwd":
-      return "reads outside this workspace";
+      return "读取工作区外文件";
     case "write-in-cwd":
-      return "writes inside this workspace";
+      return "写入工作区内文件";
     case "write-out-cwd":
-      return "writes outside this workspace";
+      return "写入工作区外文件";
     case "delete-in-cwd":
-      return "deletes inside this workspace";
+      return "删除工作区内文件";
     case "delete-out-cwd":
-      return "deletes outside this workspace";
+      return "删除工作区外文件";
     case "query-git-log":
-      return "Git history queries";
+      return "Git 历史查询";
     case "mutate-git-log":
-      return "Git history changes";
+      return "Git 历史修改";
     case "network":
-      return "network access";
+      return "网络访问";
     case "mcp":
-      return "MCP tool access";
+      return "MCP 工具访问";
     default:
       return scope;
   }

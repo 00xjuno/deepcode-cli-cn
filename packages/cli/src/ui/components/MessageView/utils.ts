@@ -237,7 +237,7 @@ export function renderMessageToStdout(message: SessionMessage, mode: RawMode): s
 
     if (isThinking) {
       const summary = buildThinkingSummary(content, message.messageParams, mode);
-      return `${chalk("✧")} ${chalk("Thinking")}${summary ? ` ${chalk(summary)}` : ""}`;
+      return `${chalk("✧")} ${chalk("思考中")}${summary ? ` ${chalk(summary)}` : ""}`;
     }
 
     return `${chalk("✦")} ${content}`;

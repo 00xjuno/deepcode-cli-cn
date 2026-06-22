@@ -93,9 +93,9 @@ export function formatThinkingMode(
   settings: Pick<ModelConfigSelection, "thinkingEnabled" | "reasoningEffort">
 ): string {
   if (!settings.thinkingEnabled) {
-    return "no thinking";
+    return "无思考";
   }
-  return `thinking ${settings.reasoningEffort}`;
+  return `思考 ${settings.reasoningEffort === "max" ? "最大" : "高"}`;
 }
 
 export function formatModelConfig(settings: ModelConfigSelection): string {

@@ -41,15 +41,15 @@ export function McpStatusList({ statuses, onCancel, onReconnect }: Props): React
       <Box flexDirection="column" marginLeft={1} paddingX={1} gap={1} borderStyle="round" borderDimColor>
         <Box flexDirection="column">
           <Text color="#229ac3" bold>
-            Manage MCP servers
+            管理 MCP 服务器
           </Text>
-          <Text dimColor>0 servers</Text>
+          <Text dimColor>0 个服务器</Text>
         </Box>
         <Box flexDirection="column">
-          <Text dimColor>No MCP servers configured.</Text>
-          <Text dimColor>Add MCP servers to your settings to get started.</Text>
+          <Text dimColor>未配置 MCP 服务器。</Text>
+          <Text dimColor>在设置中添加 MCP 服务器以开始使用。</Text>
         </Box>
-        <Text dimColor>Esc to close</Text>
+        <Text dimColor>Esc 关闭</Text>
       </Box>
     );
   }
@@ -230,16 +230,16 @@ function ServerListView({
           })}
           {scrollOffset > 0 || scrollOffset + maxVisible < serverCount ? (
             <Box marginTop={1}>
-              {scrollOffset > 0 ? <Text dimColor>… {scrollOffset} servers above. </Text> : null}
+              {scrollOffset > 0 ? <Text dimColor>… {scrollOffset} 个服务器在上方。</Text> : null}
               {scrollOffset + maxVisible < serverCount ? (
-                <Text dimColor>… {serverCount - scrollOffset - maxVisible} servers below.</Text>
+                <Text dimColor>… {serverCount - scrollOffset - maxVisible} 个服务器在下方。</Text>
               ) : null}
             </Box>
           ) : null}
         </Box>
         {/* Footer */}
         <Box paddingX={1}>
-          <Text dimColor>↑/↓ navigate · Enter view details · Esc close</Text>
+          <Text dimColor>↑/↓ 导航 · 回车 查看详情 · Esc 关闭</Text>
         </Box>
       </Box>
     </Box>
@@ -333,7 +333,7 @@ function ServerDetailView({
   const allItems = useMemo(() => {
     const items: { type: string; name: string }[] = [];
     if (hasReconnect) {
-      items.push({ type: "action", name: "Reconnect" });
+      items.push({ type: "action", name: "重新连接" });
     }
     server.tools.forEach((tool) => items.push({ type: "tool", name: tool }));
     server.prompts.forEach((prompt) => items.push({ type: "prompt", name: prompt }));
@@ -477,7 +477,7 @@ function ServerDetailView({
           <Box paddingX={1} flexDirection="column">
             {visibleItems.length === 0 ? (
               <Box paddingY={1}>
-                <Text dimColor>No items available</Text>
+                <Text dimColor>没有可用项目</Text>
               </Box>
             ) : (
               visibleItems.map((item, idx) => {
@@ -490,9 +490,9 @@ function ServerDetailView({
           {visibleStart > 0 || visibleStart + maxVisible < totalItems ? (
             <Box marginTop={1} gap={1}>
               {totalItems - visibleStart - maxVisible > 0 ? <Text dimColor>▼</Text> : <Text> </Text>}
-              {visibleStart > 0 ? <Text dimColor>… {visibleStart} items above. </Text> : null}
+              {visibleStart > 0 ? <Text dimColor>… {visibleStart} 个项目在上方。</Text> : null}
               {totalItems - visibleStart - maxVisible > 0 ? (
-                <Text dimColor>… {totalItems - visibleStart - maxVisible} items below.</Text>
+                <Text dimColor>… {totalItems - visibleStart - maxVisible} 个项目在下方。</Text>
               ) : null}
             </Box>
           ) : null}
@@ -501,10 +501,10 @@ function ServerDetailView({
         <Box paddingX={1}>
           <Text dimColor>
             {hasReconnect
-              ? "Enter to reconnect · Esc back · Ctrl+C close"
+              ? "回车 重连 · Esc 返回 · Ctrl+C 关闭"
               : canScroll
-                ? "↑/↓ scroll · Space/Enter back · Esc back · Ctrl+C close"
-                : "Space/Enter back · Esc back · Ctrl+C close"}
+                ? "↑/↓ 滚动 · 空格/回车 返回 · Esc 返回 · Ctrl+C 关闭"
+                : "空格/回车 返回 · Esc 返回 · Ctrl+C 关闭"}
           </Text>
         </Box>
       </Box>

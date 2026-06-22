@@ -133,10 +133,10 @@ export const ProcessStdoutView = React.memo(function ProcessStdoutView({
   return (
     <Box flexDirection="column" width={screenWidth} minWidth={80} height={panelHeight} overflow="hidden">
       <Box borderStyle="single" borderBottom={true} borderLeft={false} borderRight={false} borderTop={false}>
-        <Text bold>📟 Process Output</Text>
+        <Text bold>📟 进程输出</Text>
         <Text dimColor>{` (${formatTimeoutHint(
           timeoutProcess?.entry
-        )} · +/- adjust · Ctrl+O or Esc to close · ↑↓ PageUp/PageDown to scroll)`}</Text>
+        )} · +/- 调整 · Ctrl+O 或 Esc 关闭 · ↑↓ PageUp/PageDown 滚动)`}</Text>
       </Box>
       <Box flexDirection="column" paddingX={1} overflow="hidden">
         {visibleLines.map((line, index) => (
@@ -177,9 +177,9 @@ function formatTimeoutHint(entry?: SessionProcessEntry): string {
 
 function formatAdjustmentStatus(adjustment: BashTimeoutAdjustment | null): string {
   if (!adjustment) {
-    return "No adjustable Bash timeout";
+    return "没有可调整的 Bash 超时";
   }
-  return `Timeout set to ${formatDuration(adjustment.timeoutMs)}`;
+  return `超时设置为 ${formatDuration(adjustment.timeoutMs)}`;
 }
 
 function formatDuration(ms: number): string {

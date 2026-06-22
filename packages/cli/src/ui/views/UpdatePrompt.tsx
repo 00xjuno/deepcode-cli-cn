@@ -25,11 +25,11 @@ export function UpdatePrompt({ currentVersion, latestVersion, installCommand, on
     },
     {
       value: "ignore-once",
-      label: "Ignore once",
+      label: "仅本次忽略",
     },
     {
       value: "ignore-version",
-      label: `Ignore this version (${latestVersion})`,
+      label: `忽略此版本 (${latestVersion})`,
     },
   ];
 
