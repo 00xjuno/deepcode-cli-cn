@@ -1,6 +1,6 @@
 {
   "name": "deepcode-cli-cn",
-  "version": "0.1.35",
+  "version": "0.1.37",
   "description": "Deep Code CLI 全中文汉化版 — 终端里的中文 AI 编程助手",
   "license": "MIT",
   "packageManager": "npm@10.9.4",

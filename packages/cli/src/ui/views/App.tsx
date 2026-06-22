@@ -235,13 +235,21 @@ function App({ projectRoot, initialPrompt, onRestart }: AppProps): React.ReactEl
     // 立即查询
     void refreshBalance();
 
-    // 每 5 分钟刷新
-    const interval = setInterval(() => void refreshBalance(), 5 * 60 * 1000);
+    // 每 1 分钟刷新
+    const interval = setInterval(() => void refreshBalance(), 60 * 1000);
     return () => {
       cancelled = true;
       clearInterval(interval);
     };
   }, [resolvedSettings.apiKey, resolvedSettings.baseURL]);
+
+  // 余额更新后刷新状态栏
+  useEffect(() => {
+    const session = sessionManager.getSession(sessionManager.getActiveSessionId() ?? "");
+    if (session) {
+      setStatusLine(buildStatusLine(session, balanceText));
+    }
+  }, [balanceText, sessionManager]);
 
   function loadVisibleMessages(manager: SessionManager, sessionId: string): SessionMessage[] {
     return manager.listSessionMessages(sessionId).filter((m) => m.visible);
