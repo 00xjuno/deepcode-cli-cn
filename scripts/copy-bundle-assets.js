@@ -4,8 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const cliRoot = join(root, "packages", "cli");
-const distDir = join(cliRoot, "dist");
+const distDir = join(root, "dist");
 const bundledSkillsSrc = join(root, "packages", "core", "templates", "skills", "bundled");
 const bundledSkillsDest = join(distDir, "bundled");
 

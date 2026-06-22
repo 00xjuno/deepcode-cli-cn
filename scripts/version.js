@@ -259,6 +259,14 @@ if (pkgPaths.length === 0) {
 
 log("Updating package.json files:\n");
 
+// Update root package.json first
+const rootPkgPath = join(root, "package.json");
+const rootPkg = readJson(rootPkgPath);
+const rootOld = rootPkg.version;
+rootPkg.version = version;
+writeJson(rootPkgPath, rootPkg);
+log(`  package.json: ${rootOld} → ${version}`);
+
 for (const pkgPath of pkgPaths) {
   const pkg = readJson(pkgPath);
   const oldVersion = pkg.version;

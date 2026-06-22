@@ -134,10 +134,10 @@ function readPackageInfo(): PackageInfo {
   try {
     const pkg = require("../package.json") as { name?: unknown; version?: unknown };
     return {
-      name: typeof pkg.name === "string" ? pkg.name : "@vegamo/deepcode-cli",
+      name: typeof pkg.name === "string" ? pkg.name : "deepcode-cli-cn",
       version: typeof pkg.version === "string" ? pkg.version : "",
     };
   } catch {
-    return { name: "@vegamo/deepcode-cli", version: "" };
+    return { name: "deepcode-cli-cn", version: "" };
   }
 }

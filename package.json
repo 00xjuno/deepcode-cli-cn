@@ -1,10 +1,24 @@
 {
   "name": "deepcode-cli-cn",
-  "version": "0.1.31",
+  "version": "0.1.33",
   "description": "Deep Code CLI 全中文汉化版 — 终端里的中文 AI 编程助手",
   "license": "MIT",
   "packageManager": "npm@10.9.4",
   "type": "module",
+  "bin": {
+    "deepcode": "./dist/cli.js"
+  },
+  "main": "./dist/cli.js",
+  "files": [
+    "dist/cli.js",
+    "dist/bundled/**",
+    "README.md",
+    "README-en.md",
+    "README-zh_CN.md",
+    "RELEASE.md",
+    "RELEASE_en.md",
+    "LICENSE"
+  ],
   "workspaces": [
     "packages/*"
   ],
@@ -29,7 +43,19 @@
     "test": "npm run test --workspaces --if-present",
     "release:version": "node scripts/version.js",
     "prepare:package": "node scripts/prepare-package.js",
-    "prepare": "husky && npm run build && npm run bundle"
+    "prepare": "node -e \"try{require('husky')}catch(e){}\""
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "deepcode-core-cn": "^0.1.32",
+    "gradient-string": "^3.0.0",
+    "ignore": "^7.0.5",
+    "ink": "^7.0.4",
+    "ink-gradient": "^4.0.1",
+    "react": "^19.2.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

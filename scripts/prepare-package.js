@@ -103,7 +103,7 @@ if (!isValidSemver(version)) {
   fail(`Invalid semver version: ${version}`);
 }
 
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 11;
 
 // ── Banner ───────────────────────────────────────────────────────────────────
 
@@ -163,9 +163,11 @@ step(3, TOTAL_STEPS, "Updating package versions...");
 
 const corePkgPath = join(root, "packages", "core", "package.json");
 const cliPkgPath = join(root, "packages", "cli", "package.json");
+const rootPkgPath = join(root, "package.json");
 
 const corePkg = readJson(corePkgPath);
 const cliPkg = readJson(cliPkgPath);
+const rootPkg = readJson(rootPkgPath);
 
 const oldVersion = corePkg.version;
 
@@ -174,15 +176,19 @@ const origCliPkg = JSON.stringify(cliPkg, null, 2) + "\n";
 
 corePkg.version = version;
 cliPkg.version = version;
+rootPkg.version = version;
 
 if (!dryRun) {
   writeJson(corePkgPath, corePkg);
   writeJson(cliPkgPath, cliPkg);
-  ok(`Updated packages/core: ${oldVersion} → ${version}`);
-  ok(`Updated packages/cli:  ${oldVersion} → ${version}`);
+  writeJson(rootPkgPath, rootPkg);
+  ok(`Updated packages/core:    ${oldVersion} → ${version}`);
+  ok(`Updated packages/cli:     ${oldVersion} → ${version}`);
+  ok(`Updated root deepcode-cli-cn: ${oldVersion} → ${version}`);
 } else {
-  log(`  (dry-run) packages/core: ${oldVersion} → ${version}`);
-  log(`  (dry-run) packages/cli:  ${oldVersion} → ${version}`);
+  log(`  (dry-run) packages/core:    ${oldVersion} → ${version}`);
+  log(`  (dry-run) packages/cli:     ${oldVersion} → ${version}`);
+  log(`  (dry-run) root deepcode-cli-cn: ${oldVersion} → ${version}`);
 }
 
 // ── 4. Quality checks ────────────────────────────────────────────────────────
@@ -263,13 +269,39 @@ if (!dryRun) {
   log("  Restored @vegamo/deepcode-core dep to file:../core");
 }
 
-// ── 9. Git commit + tag ──────────────────────────────────────────────────────
+// ── 9. Build root bundle ──────────────────────────────────────────────────────
 
-step(9, TOTAL_STEPS, "Creating git commit and tag...");
+step(9, TOTAL_STEPS, "Building root bundle for deepcode-cli-cn...");
+
+// The esbuild bundle now outputs to root dist/cli.js (fully self-contained)
+run("npm", ["run", "bundle"], { dryRun, label: "npm run bundle (root)" });
+ok("Root dist/cli.js built");
+
+// ── 10. Publish root package ──────────────────────────────────────────────────
+
+step(10, TOTAL_STEPS, "Publishing deepcode-cli-cn...");
+
+const rootPublishArgs = [
+  "publish",
+  "--access",
+  "public",
+  "--tag",
+  tag,
+  "--registry",
+  "https://registry.npmjs.org",
+];
+if (dryRun) rootPublishArgs.push("--dry-run");
+
+run("npm", rootPublishArgs, { dryRun, label: `npm ${rootPublishArgs.join(" ")}` });
+ok(`Published deepcode-cli-cn@${version}`);
+
+// ── 11. Git commit + tag ──────────────────────────────────────────────────────
+
+step(11, TOTAL_STEPS, "Creating git commit and tag...");
 
 if (!dryRun) {
-  run("git", ["add", "packages/core/package.json", "packages/cli/package.json"], {
-    label: "git add packages/*/package.json",
+  run("git", ["add", "packages/core/package.json", "packages/cli/package.json", "package.json"], {
+    label: "git add package.json packages/*/package.json",
   });
   run("git", ["commit", "-m", `chore(release): v${version}`], {
     label: `git commit -m "chore(release): v${version}"`,
@@ -292,10 +324,12 @@ console.log(`
   Packages published:
     • @vegamo/deepcode-core@${version}
     • @vegamo/deepcode-cli@${version}
+    • deepcode-cli-cn@${version}
 
   Verify:
-    npm view @vegamo/deepcode-cli version
-    npx @vegamo/deepcode-cli --version
+    npm view deepcode-cli-cn version
+    npx deepcode-cli-cn --version
+    npm install -g deepcode-cli-cn && deepcode --version
 
   Push to remote:
     git push && git push --tags
